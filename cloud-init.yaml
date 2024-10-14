@@ -1,0 +1,26 @@
+#cloud-config
+write_files:
+  - path: /opt/factorio/compose.yaml
+    content: |
+      services:
+        factorio:
+          image: factoriotools/factorio:stable
+          ports:
+           - "34197:34197/udp"
+           - "27015:27015/tcp"
+          volumes:
+           - /opt/factorio:/factorio
+          entrypoint: /bin/sh -c "mkdir -p /factorio/config && cat /factorio/server-settings.json > /factorio/config/server-settings.json && exec /docker-entrypoint.sh"
+  - path: /opt/factorio/server-settings.json
+    content: |
+      {
+        "name": "Factorio server",
+        "description": "Server description",
+        "visibility": {
+          "public": false,
+          "lan": false
+        }
+      }
+
+runcmd:
+  - docker compose --project-directory /opt/factorio up -d

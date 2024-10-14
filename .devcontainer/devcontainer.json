@@ -1,0 +1,45 @@
+{
+	"name": "Factorio Hetzner",
+	"build": { "dockerfile": "Dockerfile", "context": ".." },
+
+	"features": {
+		"ghcr.io/devcontainers/features/terraform:1": {},
+		"ghcr.io/dhoeric/features/terraform-docs:1": {},
+
+		"ghcr.io/va-h/devcontainers-features/difftastic:1": {}
+	},
+
+	"mounts": [
+		// Mount bash aliases
+		{
+			"source": "${env:HOME}${env:USERPROFILE}/.bash_aliases",
+			"target": "/home/vscode/.bash_aliases",
+			"type": "bind"
+		},
+		// bash history
+		"source=hematoscope-infra-bashhistory,target=/commandhistory"
+	],
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"hashicorp.terraform",
+				"usernamehw.errorlens"
+			],
+			"settings": {
+				"terraform.languageServer": {
+					"enabled": true,
+					"args": [
+						"serve"
+					]
+				}
+			}
+		}
+	},
+
+	"remoteEnv": {
+		"TF_LOG": "info",
+		"TF_LOG_PATH": "./terraform.log"
+	}
+}

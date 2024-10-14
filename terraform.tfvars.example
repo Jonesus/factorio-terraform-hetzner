@@ -1,0 +1,4 @@
+hcloud_token = "<insert hetzner cloud api token>"
+vm_location  = "<insert virtual machine location>"
+vm_size      = "<insert virtual machine type>"
+ssh_key      = "<insert ssh public key>"
